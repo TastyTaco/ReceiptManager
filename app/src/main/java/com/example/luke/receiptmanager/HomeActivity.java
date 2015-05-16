@@ -39,7 +39,7 @@ public class HomeActivity extends Activity {
 
         if (receipts != null && receipts.size() > 0) {
             TextView welcome = (TextView)findViewById(R.id.txtWelcome);
-            welcome.setText("Title:" + receipts.get(1).Title + " AmountSpent:" + receipts.get(1).AmountSpent + " Category:" + receipts.get(1).Category);
+            welcome.setText("Title:" + receipts.get(0).Title + " AmountSpent:" + receipts.get(0).AmountSpent + " Category:" + receipts.get(0).Category);
         }
 
     }
