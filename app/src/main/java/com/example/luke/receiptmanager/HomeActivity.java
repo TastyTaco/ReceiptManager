@@ -1,10 +1,19 @@
 package com.example.luke.receiptmanager;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 
 public class HomeActivity extends Activity {
@@ -13,6 +22,26 @@ public class HomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Button btnReceiptView = (Button)findViewById(R.id.button);
+        btnReceiptView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent tIntent = new Intent(HomeActivity.this, AddReceipt.class);
+                startActivity(tIntent);
+            }
+        });
+
+        ReceiptManager receiptManager = new ReceiptManager(getApplicationContext());
+        receiptManager.loadReceipts();
+        ArrayList<Receipt> receipts = receiptManager.GetReciepts();
+
+
+        if (receipts != null && receipts.size() > 0) {
+            TextView welcome = (TextView)findViewById(R.id.txtWelcome);
+            welcome.setText("Title:" + receipts.get(1).Title + " AmountSpent:" + receipts.get(1).AmountSpent + " Category:" + receipts.get(1).Category);
+        }
+
     }
 
     @Override
@@ -36,73 +65,5 @@ public class HomeActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
-//Copied from Logan Mabbett's PhotoMosaic Project.
-
-//    String mPhotoFileName = "";
-//    File mPhotoFile = null;
-//    Uri mPhotoFileUri;
-
-//    void setup() {
-//
-//        Button btnPhoto = (Button)findViewById(R.id.btnPhotoIntent);
-//        btnPhoto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mPhotoFile = CreateUniqueFile();
-//                mPhotoFileName = mPhotoFile.getName();
-//
-//                mPhotoFileUri = Uri.fromFile(mPhotoFile);
-//
-//                Intent imageCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                imageCaptureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mPhotoFileUri);
-//
-//                startActivityForResult(imageCaptureIntent, 1);
-//            }
-//        });
-//    }
-//
-//    File CreateUniqueFile() {
-//        File imageRootPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-//
-//        File imageStorageDirectory = new File(imageRootPath, "PhotoMosaic");
-//        if (!imageStorageDirectory.exists()) {
-//            imageStorageDirectory.mkdirs();
-//        }
-//
-//        SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
-//        Date currTime = new Date();
-//        String timeStamp = timestampFormat.format(currTime);
-//
-//        String photoFileName = "IMG_" + timeStamp + ".jpg";
-//
-//        File photoFile = new File(imageStorageDirectory.getPath() + File.separator + photoFileName);
-//
-//        return photoFile;
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        //Camera intent request
-//        if (requestCode == 1) {
-//            if (resultCode == RESULT_OK) {
-//
-//                String realFilePath = mPhotoFile.getPath();
-//
-//                Bitmap userPhotoBitmap = BitmapFactory.decodeFile(realFilePath);
-//
-//                int[] imageViews = new int[] {R.id.ivML, R.id.ivMR, R.id.ivUL, R.id.ivUR};
-//
-//                for (int id : imageViews) {
-//                    ImageView imgView = (ImageView)findViewById(id);
-//                    imgView.setImageBitmap(userPhotoBitmap);
-//                }
-//
-//            } else {
-//                Toast.makeText(this, "No photo saved.", Toast.LENGTH_LONG).show();
-//            }
-//        }
-//    }
 
 }

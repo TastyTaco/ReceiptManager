@@ -20,11 +20,11 @@ android {
 
     //Firebase
     //if the build complains about multiple files, uncomment this.
-    /*packagingOptions {
+    packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE-FIREBASE.txt'
         exclude 'META-INF/NOTICE'
-    }*/
+    }
 }
 
 dependencies {
@@ -33,4 +33,8 @@ dependencies {
 
     //Firebase
     compile 'com.firebase:firebase-client-android:2.2.4+'
+
+    //GSON Automatic Object to json converter.
+    //https://github.com/google/gson
+    compile 'com.google.code.gson:gson:2.3.1'
 }
